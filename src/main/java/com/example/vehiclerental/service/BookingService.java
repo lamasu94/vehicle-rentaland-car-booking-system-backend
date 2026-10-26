@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-
+import java.util.Date;
+import java.time.LocalDate;
+import com.example.vehiclerental.domain.BookingStatus;
 @Service
 public class BookingService {
     @Autowired 
@@ -39,5 +41,13 @@ public class BookingService {
         }
         bookingRepository.deleteById(id);
         return true;
+    }
+    public List<Booking> findByStatus(BookingStatus status) {
+       
+        return bookingRepository.findByStatusOrderByPickupDateAsc(status);
+    }
+    public List<Booking> findByPickupDateBetween( LocalDate startDate, LocalDate endDate) {
+        
+        return bookingRepository.findByPickupDateBetweenOrderByPickupDateAsc(startDate, endDate);
     }
 }

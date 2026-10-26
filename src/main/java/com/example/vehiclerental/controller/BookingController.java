@@ -3,13 +3,14 @@ package com.example.vehiclerental.controller;
 
 import com.example.vehiclerental.domain.Booking;
 import com.example.vehiclerental.service.BookingService;
-
+import com.example.vehiclerental.domain.BookingStatus;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
+
 
 @RestController
 @RequestMapping("/api/bookings")
@@ -83,4 +84,17 @@ public class BookingController {
 
         return ResponseEntity.ok("Booking deleted successfully");
     }
+    @GetMapping("by-status")
+    public ResponseEntity<List<Booking>> findByStatus(@RequestParam String status) {
+        List<Booking> bookings = bookingService.findByStatus(BookingStatus.valueOf(status.trim().toUpperCase()));
+        return ResponseEntity.ok(bookings);
+    }
+    @GetMapping("between")
+    public ResponseEntity<List<Booking>> findByPickupDateBetween(@RequestParam String startDate, @RequestParam String endDate) {
+        LocalDate start = LocalDate.parse(startDate);
+        LocalDate end = LocalDate.parse(endDate);
+        List<Booking> bookings = bookingService.findByPickupDateBetween(start, end);
+        return ResponseEntity.ok(bookings);
+    }
+        
 }

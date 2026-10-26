@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @RestController
 @RequestMapping("/api/customers")
@@ -63,4 +66,10 @@ public class CustomerController {
 
         return ResponseEntity.ok("Customer deleted successfully");
     }
+    @GetMapping("by-last-name")
+    public ResponseEntity<List<Customer>> findByLastName(@RequestParam String lastName) {
+        List<Customer> customers = customerService.findByLastName(lastName);
+        return ResponseEntity.ok(customers);
+    }
+    
 }

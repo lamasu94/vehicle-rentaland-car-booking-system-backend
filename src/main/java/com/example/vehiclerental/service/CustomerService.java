@@ -45,4 +45,8 @@ public class CustomerService {
         customerRepository.deleteById(id);
         return true;
     }
+    public List<Customer> findByLastName(String lastName) {
+        return customerRepository.findByLastNameIgnoreCaseOrderByFirstNameAsc(lastName);
+    }
+
 }
