@@ -42,4 +42,7 @@ public class FeatureService {
         featureRepository.deleteById(id);
         return true;
     }
+    public List<Feature> findAvailableFeatures() {
+        return featureRepository.findAvailableFeatures();
+    }
 }

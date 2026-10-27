@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @RestController
 @RequestMapping("/api/vehicles")
@@ -63,4 +66,10 @@ public class VehicleController {
 
         return ResponseEntity.ok("Vehicle deleted successfully");
     }
+    @GetMapping("by-feature")
+    public ResponseEntity<List<Vehicle>> findVehiclesByFeatureName(@RequestParam String name) {
+        List<Vehicle> vehicles = vehicleService.findVehiclesByFeatureName(name);
+        return ResponseEntity.ok(vehicles);
+    }
+    
 }

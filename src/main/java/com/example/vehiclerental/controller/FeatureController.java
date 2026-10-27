@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @RestController
 @RequestMapping("/api/features")
@@ -54,4 +57,10 @@ public class FeatureController {
             return ResponseEntity.notFound().build();
         }
     }
+    @GetMapping("unused")
+    public ResponseEntity<List<Feature>> findAvailableFeatures() {
+        List<Feature> availableFeatures = featureService.findAvailableFeatures();
+        return ResponseEntity.ok(availableFeatures);
+    }
+    
 }

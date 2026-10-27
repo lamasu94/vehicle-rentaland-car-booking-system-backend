@@ -41,4 +41,7 @@ public class ParkingSlotService {
         parkingSlotRepository.deleteById(id);
         return true;
     }
+    public List<ParkingSlot> findAvailableParkingSlots() {
+        return parkingSlotRepository.findAvailableParkingSlots();
+    }
 }

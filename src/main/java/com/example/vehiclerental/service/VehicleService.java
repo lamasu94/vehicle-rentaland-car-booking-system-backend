@@ -44,4 +44,7 @@ public class VehicleService {
         vehicleRepository.deleteById(id);
         return true;
     }
+    public List<Vehicle> findVehiclesByFeatureName(String name) {
+        return vehicleRepository.findVehiclesByFeatureName(name);
+    }
 }

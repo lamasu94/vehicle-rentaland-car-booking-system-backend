@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @RestController
 @RequestMapping("/api/parking-slots")
@@ -48,5 +51,11 @@ public class ParkingSlotController {
             return ResponseEntity.notFound().build();
         }
     }
+    @GetMapping("free")
+    public ResponseEntity<List<ParkingSlot>> findAvailableParkingSlots() {
+        List<ParkingSlot> availableSlots = parkingSlotService.findAvailableParkingSlots();
+        return ResponseEntity.ok(availableSlots);
+    }
+   
 }
 

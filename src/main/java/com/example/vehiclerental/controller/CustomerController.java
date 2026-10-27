@@ -71,5 +71,11 @@ public class CustomerController {
         List<Customer> customers = customerService.findByLastName(lastName);
         return ResponseEntity.ok(customers);
     }
+    @GetMapping("of-vehicle/{vehicleId}")
+    public ResponseEntity<List<Customer>> findCustomerByVehicleId(@PathVariable UUID vehicleId) {
+        List<Customer> customers = customerService.findCustomerByVehicleId(vehicleId);
+        return ResponseEntity.ok(customers);
+    }
+    
     
 }
