@@ -4,6 +4,9 @@ package com.example.vehiclerental.controller;
 import com.example.vehiclerental.domain.Booking;
 import com.example.vehiclerental.service.BookingService;
 import com.example.vehiclerental.domain.BookingStatus;
+import com.example.vehiclerental.domain.Vehicle;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,21 +18,15 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/api/bookings")
 public class BookingController {
+    @Autowired 
+    private  BookingService bookingService;
 
-    private final BookingService bookingService;
-
-    public BookingController(BookingService bookingService) {
-        this.bookingService = bookingService;
-    }
-
+    
     
     @PostMapping("/save")
     public ResponseEntity<String> save(@RequestBody Booking booking) {
 
-        bookingService.save(booking);
-
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body("Booking saved successfully");
+         return ResponseEntity.ok(bookingService.save(booking));
     }
 
     
@@ -96,5 +93,8 @@ public class BookingController {
         List<Booking> bookings = bookingService.findByPickupDateBetween(start, end);
         return ResponseEntity.ok(bookings);
     }
-        
+     @PatchMapping ("{id}/status")   
+     public ResponseEntity<?> changeBookingStatus (@PathVariable UUID id, @RequestParam BookingStatus status){
+        return ResponseEntity.ok(bookingService.changeBookingStatus(id, status));
+     }
 }

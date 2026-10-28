@@ -1,6 +1,7 @@
 
 package com.example.vehiclerental.controller;
 
+import com.example.vehiclerental.domain.BookingStatus;
 import com.example.vehiclerental.domain.Vehicle;
 import com.example.vehiclerental.service.VehicleService;
 
@@ -10,8 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+
 
 
 @RestController
@@ -71,5 +71,13 @@ public class VehicleController {
         List<Vehicle> vehicles = vehicleService.findVehiclesByFeatureName(name);
         return ResponseEntity.ok(vehicles);
     }
+    @PutMapping("{vehicleId}/features/{featureId}")
+    public ResponseEntity<String> addFeatureToVehicle(@PathVariable UUID vehicleId, @PathVariable  UUID featureId){
+          return ResponseEntity.ok(vehicleService.addFeatureToVehicle(vehicleId, featureId));
+    }
+    @PatchMapping ("{vehicleId}/parking-slot")   
+     public ResponseEntity<?> changeBookingStatus (@PathVariable UUID vehicleId, @RequestParam int slotNumber){
+        return ResponseEntity.ok(vehicleService.changeParkingSlot(vehicleId, slotNumber));
+     }
     
 }

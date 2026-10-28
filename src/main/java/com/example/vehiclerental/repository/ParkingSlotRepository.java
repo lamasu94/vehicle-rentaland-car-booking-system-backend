@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import java.util.UUID;
 import java.util.List;
+import java.util.Optional;
 
 public interface ParkingSlotRepository extends JpaRepository<ParkingSlot, UUID> {
     @Query ("""
@@ -16,5 +17,7 @@ public interface ParkingSlotRepository extends JpaRepository<ParkingSlot, UUID> 
         order by p.slotNumber ASC
     """)
     List<ParkingSlot> findAvailableParkingSlots();
+    Optional<ParkingSlot> findBySlotNumber(int slotNumber);
+
 
 }

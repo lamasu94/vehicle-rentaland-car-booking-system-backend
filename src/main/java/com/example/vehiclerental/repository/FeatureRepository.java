@@ -12,4 +12,5 @@ public interface FeatureRepository extends JpaRepository<Feature, UUID> {
         where f.vehicles is empty
     """)
     List<Feature> findAvailableFeatures();
+    
 }
