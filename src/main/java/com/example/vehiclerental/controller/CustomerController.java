@@ -7,7 +7,7 @@ import com.example.vehiclerental.service.CustomerService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 import java.util.UUID;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,12 +17,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RestController
 @RequestMapping("/api/customers")
 public class CustomerController {
+    @Autowired 
+    private  CustomerService customerService;
 
-    private final CustomerService customerService;
-
-    public CustomerController(CustomerService customerService) {
-        this.customerService = customerService;
-    }
+   
 
     @PostMapping("/save")
     public ResponseEntity<String> save(@RequestBody Customer customer) {

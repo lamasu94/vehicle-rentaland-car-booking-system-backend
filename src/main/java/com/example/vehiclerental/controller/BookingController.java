@@ -4,7 +4,7 @@ package com.example.vehiclerental.controller;
 import com.example.vehiclerental.domain.Booking;
 import com.example.vehiclerental.service.BookingService;
 import com.example.vehiclerental.domain.BookingStatus;
-import com.example.vehiclerental.domain.Vehicle;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

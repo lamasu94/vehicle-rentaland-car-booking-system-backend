@@ -51,7 +51,7 @@ public class ParkingSlotController {
             return ResponseEntity.notFound().build();
         }
     }
-    @GetMapping("free")
+    @GetMapping("/free")
     public ResponseEntity<List<ParkingSlot>> findAvailableParkingSlots() {
         List<ParkingSlot> availableSlots = parkingSlotService.findAvailableParkingSlots();
         return ResponseEntity.ok(availableSlots);

@@ -2,6 +2,8 @@ package com.example.vehiclerental.service;
 
 import com.example.vehiclerental.domain.Booking;
 import com.example.vehiclerental.repository.BookingRepository;
+import com.example.vehiclerental.repository.PaymentRepository;
+
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,6 +20,8 @@ import com.example.vehiclerental.domain.Vehicle;
 public class BookingService {
     @Autowired 
     private BookingRepository bookingRepository;
+    @Autowired 
+    private PaymentRepository paymentRepo;
     public String save(Booking booking ) {
        if (booking.getPickupDate().isBefore(LocalDate.now()))  {
          throw new ResponseStatusException(
@@ -56,6 +60,14 @@ public class BookingService {
     public boolean delete(UUID id) {
         if(!bookingRepository.existsById(id)) {
             return false;
+        }
+        Optional<Booking> getBooking = bookingRepository.findById(id);
+        Booking booking = getBooking.get();
+        if(paymentRepo.existsByBooking(booking)){
+             throw new ResponseStatusException(
+                HttpStatus.CONFLICT,
+                "That booking has payments, delete them first"
+        );
         }
         bookingRepository.deleteById(id);
         return true;
