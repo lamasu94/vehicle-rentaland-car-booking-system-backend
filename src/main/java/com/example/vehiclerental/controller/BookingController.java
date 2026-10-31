@@ -7,12 +7,14 @@ import com.example.vehiclerental.domain.BookingStatus;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
+
 
 
 @RestController
@@ -97,4 +99,19 @@ public class BookingController {
      public ResponseEntity<?> changeBookingStatus (@PathVariable UUID id, @RequestParam BookingStatus status){
         return ResponseEntity.ok(bookingService.changeBookingStatus(id, status));
      }
+     @GetMapping("stats/by-status")
+     public ResponseEntity<List<Object[]>> findBookingCountByStatus(){
+        return ResponseEntity.ok( bookingService.findBookingCountByStatus());
+     }
+     @PatchMapping ("/cancel-day")
+     public ResponseEntity<String>cancelBookingsByVehicleAndDate(
+        @RequestParam UUID vehicleId,
+        @RequestParam
+        @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+        LocalDate date) {
+            int canceledCount = bookingService.cancelBookingByIdAndDate(vehicleId, date);
+            return ResponseEntity.ok(canceledCount +"Booking cancelled");
+        }
+     
 }
+

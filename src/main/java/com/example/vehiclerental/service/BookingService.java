@@ -4,6 +4,8 @@ import com.example.vehiclerental.domain.Booking;
 import com.example.vehiclerental.repository.BookingRepository;
 import com.example.vehiclerental.repository.PaymentRepository;
 
+import jakarta.transaction.Transactional;
+
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -107,5 +109,12 @@ public class BookingService {
         booking.setStatus(status);
         bookingRepository.save(booking);
         return "Booking status updated successfully";
+    }
+    public List<Object[]> findBookingCountByStatus(){
+        return bookingRepository.findBookingCountByStatus();
+    }
+    @Transactional 
+    public int cancelBookingByIdAndDate(UUID vehicleId, LocalDate date ){
+        return bookingRepository.cancelBookingByVehicleIdAndDate(vehicleId, date, BookingStatus.DECLINED, BookingStatus.RETURNED);
     }
 }
