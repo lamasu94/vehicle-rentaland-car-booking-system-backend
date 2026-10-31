@@ -3,6 +3,8 @@ import com.example.vehiclerental.domain.Booking;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import com.example.vehiclerental.domain.BookingStatus;
 import com.example.vehiclerental.domain.Vehicle;
 import org.springframework.data.jpa.repository.Modifying;
@@ -27,5 +29,8 @@ public interface BookingRepository extends JpaRepository<Booking, UUID> {
             """) 
             int cancelBookingByVehicleIdAndDate(@Param("vehicleId") UUID vehicleId,@Param("date") LocalDate date, 
             @Param("newStatus") BookingStatus newStatus, @Param("excludeStatus") BookingStatus excludeStatus);
+            Page<Booking> findAll(Pageable pageable);
+            long countByStatus(BookingStatus status);
+            long countByPickupDate(LocalDate date);
     }
     

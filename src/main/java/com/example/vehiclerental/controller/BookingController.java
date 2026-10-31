@@ -4,8 +4,10 @@ package com.example.vehiclerental.controller;
 import com.example.vehiclerental.domain.Booking;
 import com.example.vehiclerental.service.BookingService;
 import com.example.vehiclerental.domain.BookingStatus;
-
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
+
 
 
 
@@ -112,6 +115,15 @@ public class BookingController {
             int canceledCount = bookingService.cancelBookingByIdAndDate(vehicleId, date);
             return ResponseEntity.ok(canceledCount +"Booking cancelled");
         }
+    @GetMapping("/page")
+   public  ResponseEntity<Page<Booking>> findBookingPage(@RequestParam int page, @RequestParam int size, @RequestParam String sort){
+         String[] sortParams = sort.split(",");
+         String field = sortParams[0];
+         Sort.Direction direction = Sort.Direction.fromString(sortParams[1]);
+         Pageable pageable = PageRequest.of(page, size, Sort.by(direction, field));
+         return ResponseEntity.ok(bookingService.findBookingPage(pageable));
+
+   }
      
 }
 

@@ -5,7 +5,8 @@ import com.example.vehiclerental.repository.BookingRepository;
 import com.example.vehiclerental.repository.PaymentRepository;
 
 import jakarta.transaction.Transactional;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -117,4 +118,8 @@ public class BookingService {
     public int cancelBookingByIdAndDate(UUID vehicleId, LocalDate date ){
         return bookingRepository.cancelBookingByVehicleIdAndDate(vehicleId, date, BookingStatus.DECLINED, BookingStatus.RETURNED);
     }
+    public Page<Booking> findBookingPage(Pageable pageable){
+        return  bookingRepository.findAll(pageable);
+    }
+
 }
